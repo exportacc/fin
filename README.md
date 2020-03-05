@@ -2,4 +2,4 @@
 
 --
 
-Method or Function for Term Structure 
+Method or Function for Financial
