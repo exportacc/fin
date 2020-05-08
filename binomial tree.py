@@ -1,3 +1,9 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[8]:
+
+
 def xrange(stop,start=0,step=1):
     while start < stop :
         yield start
@@ -6,6 +12,15 @@ def xrange(stop,start=0,step=1):
 def binomialCallEuropean(s,k,T,r,q,sigma,n,call=True,style='digital'):
     import numpy as np
     from math import exp,sqrt 
+    '''
+    s : stock price
+    k : strike price
+    T : time
+    r : return rate
+    q : dividend rate 
+    sigma : risk rate 
+    n : period of tree
+    '''
     dt = T /n
     n = n+1
     u = exp(sigma * sqrt(dt))
@@ -19,9 +34,9 @@ def binomialCallEuropean(s,k,T,r,q,sigma,n,call=True,style='digital'):
             if i >= j : 
                 v[j,i] = u**(i-j) * (d**j) * s
             else : 
-                v[j,i] = 0.0
+                v[j,i] = float('nan')
     
-    print('stock price tree :\n {}'.format(np.round(v,2)))
+    print('stock price tree :\n {}'.format(np.round(v,4)))
     print('\n')
     # fix last shape problem  
     if call is True : 
@@ -40,8 +55,8 @@ def binomialCallEuropean(s,k,T,r,q,sigma,n,call=True,style='digital'):
             if i <= j and i-2 >= 0:
                 v[i-2,j-2] = exp(-r * dt) * ((1-p) * v[i-1,j-1] + p * v[i-2,j-1])
                 
-    print('premium :')
-    return np.round(v,4)
+    print('premium :\n {} \n'.format(np.round(v,4)))
+    return v[0][0]
 
 '''
 # s,k,T,r,q,sigma,n,call=True
@@ -64,3 +79,12 @@ premium :
  [0.     0.     0.     0.     0.     0.    ]
  [0.     0.     0.     0.     0.     0.    ]]
 '''
+# s,k,T,r,q,sigma,n,call=True
+print((binomialCallEuropean(25.95,26.2,0.25,0.04,0.03,0.05,3,style='European')))
+
+
+# In[ ]:
+
+
+
+
